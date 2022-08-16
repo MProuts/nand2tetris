@@ -16,5 +16,86 @@ CHIP Mux4Way16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Not(in=sel[1], out=notSel1);
+    Not(in=sel[0], out=notSel0);
+    And(a=notSel1, b=notSel0, out=selA);
+    And(a=notSel1, b=sel[0],  out=selB);
+    And(a=sel[1],  b=notSel0, out=selC);
+    And(a=sel[1],  b=sel[0],  out=selD);
+
+    And16(
+      a[0]=a[0], b[0]=selA,
+      a[1]=a[1], b[1]=selA,
+      a[2]=a[2], b[2]=selA,
+      a[3]=a[3], b[3]=selA,
+      a[4]=a[4], b[4]=selA,
+      a[5]=a[5], b[5]=selA,
+      a[6]=a[6], b[6]=selA,
+      a[7]=a[7], b[7]=selA,
+      a[8]=a[8], b[8]=selA,
+      a[9]=a[9], b[9]=selA,
+      a[10]=a[10], b[10]=selA,
+      a[11]=a[11], b[11]=selA,
+      a[12]=a[12], b[12]=selA,
+      a[13]=a[13], b[13]=selA,
+      a[14]=a[14], b[14]=selA,
+      a[15]=a[15], b[15]=selA, out=aAndSelA
+    );
+    And16(
+      a[0]=b[0], b[0]=selB,
+      a[1]=b[1], b[1]=selB,
+      a[2]=b[2], b[2]=selB,
+      a[3]=b[3], b[3]=selB,
+      a[4]=b[4], b[4]=selB,
+      a[5]=b[5], b[5]=selB,
+      a[6]=b[6], b[6]=selB,
+      a[7]=b[7], b[7]=selB,
+      a[8]=b[8], b[8]=selB,
+      a[9]=b[9], b[9]=selB,
+      a[10]=b[10], b[10]=selB,
+      a[11]=b[11], b[11]=selB,
+      a[12]=b[12], b[12]=selB,
+      a[13]=b[13], b[13]=selB,
+      a[14]=b[14], b[14]=selB,
+      a[15]=b[15], b[15]=selB, out=bAndSelB
+    );
+    And16(
+      a[0]=c[0], b[0]=selC,
+      a[1]=c[1], b[1]=selC,
+      a[2]=c[2], b[2]=selC,
+      a[3]=c[3], b[3]=selC,
+      a[4]=c[4], b[4]=selC,
+      a[5]=c[5], b[5]=selC,
+      a[6]=c[6], b[6]=selC,
+      a[7]=c[7], b[7]=selC,
+      a[8]=c[8], b[8]=selC,
+      a[9]=c[9], b[9]=selC,
+      a[10]=c[10], b[10]=selC,
+      a[11]=c[11], b[11]=selC,
+      a[12]=c[12], b[12]=selC,
+      a[13]=c[13], b[13]=selC,
+      a[14]=c[14], b[14]=selC,
+      a[15]=c[15], b[15]=selC, out=cAndSelC
+    );
+    And16(
+      a[0]=d[0], b[0]=selD,
+      a[1]=d[1], b[1]=selD,
+      a[2]=d[2], b[2]=selD,
+      a[3]=d[3], b[3]=selD,
+      a[4]=d[4], b[4]=selD,
+      a[5]=d[5], b[5]=selD,
+      a[6]=d[6], b[6]=selD,
+      a[7]=d[7], b[7]=selD,
+      a[8]=d[8], b[8]=selD,
+      a[9]=d[9], b[9]=selD,
+      a[10]=d[10], b[10]=selD,
+      a[11]=d[11], b[11]=selD,
+      a[12]=d[12], b[12]=selD,
+      a[13]=d[13], b[13]=selD,
+      a[14]=d[14], b[14]=selD,
+      a[15]=d[15], b[15]=selD, out=dAndSelD
+    );
+    Or16(a=aAndSelA, b=bAndSelB, out=xAndSelAOrB);
+    Or16(a=cAndSelC, b=dAndSelD, out=xAndSelCOrD);
+    Or16(a=xAndSelAOrB, b=xAndSelCOrD, out=out);
 }

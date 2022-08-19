@@ -1,12 +1,12 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/03/b/RAM4K.hdl
+// File name: projects/03/b/RAM512.hdl
 
 /**
- * Memory of 4K registers, each 16 bit-wide. Out holds the value
- * stored at the memory location specified by address. If load==1, then 
- * the in value is loaded into the memory location specified by address 
+ * Memory of 512 registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then
+ * the in value is loaded into the memory location specified by address
  * (the loaded value will be emitted to out from the next time step onward).
  */
 
@@ -15,5 +15,55 @@ CHIP RAM4K {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    /* set load on selected register */
+    DMux8Way(
+      sel=address[0..2],
+      in=load,
+      a=loadA,
+      b=loadB,
+      c=loadC,
+      d=loadD,
+      e=loadE,
+      f=loadF,
+      g=loadG,
+      h=loadH
+    );
+
+    /* set in on selected register */
+    DMux8Way16(
+      sel=address[0..2],
+      in=in,
+      a=inA,
+      b=inB,
+      c=inC,
+      d=inD,
+      e=inE,
+      f=inF,
+      g=inG,
+      h=inH
+    );
+
+    /* registers */
+    RAM512(address=address[3..11], in=inA, load=loadA, out=regAOut);
+    RAM512(address=address[3..11], in=inB, load=loadB, out=regBOut);
+    RAM512(address=address[3..11], in=inC, load=loadC, out=regCOut);
+    RAM512(address=address[3..11], in=inD, load=loadD, out=regDOut);
+    RAM512(address=address[3..11], in=inE, load=loadE, out=regEOut);
+    RAM512(address=address[3..11], in=inF, load=loadF, out=regFOut);
+    RAM512(address=address[3..11], in=inG, load=loadG, out=regGOut);
+    RAM512(address=address[3..11], in=inH, load=loadH, out=regHOut);
+
+    /* output selected bit */
+    Mux8Way16(
+      sel=address[0..2],
+      a=regAOut,
+      b=regBOut,
+      c=regCOut,
+      d=regDOut,
+      e=regEOut,
+      f=regFOut,
+      g=regGOut,
+      h=regHOut,
+      out=out
+    );
 }

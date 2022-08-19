@@ -16,5 +16,61 @@ CHIP PC {
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+
+    /* split `in` based on control bits */
+    DMux16(
+      in=in,
+      sel=reset,
+      b=inToReset,
+      a=inToLoad
+    );
+
+    /* split `out` based on control bits */
+    DMux16(
+      in=regOut,
+      sel=inc,
+      b=outToInc,
+      a=outToNone
+    );
+
+    /* perform operations on `in` where necessary */
+    Inc16(in=outToInc, out=incOut);
+    Zero16(in=inToReset, out=resetOut);
+
+    /* join `in` based on control bits */
+    Mux16(
+      sel=reset,
+      b=resetOut,
+      a=inToLoad,
+      out=muxResetAndLoad
+    );
+
+    /* join `out` based on control bits */
+    Mux16(
+      sel=inc,
+      b=incOut,
+      a=outToNone,
+      out=muxIncAndNone
+    );
+
+    /* join `in` and `out` based on control bits */
+    Or(a=reset, b=load, out=resetOrLoad);
+    Mux16(
+      sel=resetOrLoad,
+      b=muxResetAndLoad,
+      a=muxIncAndNone,
+      out=muxResetLoadIncNone
+    );
+
+    /* get `load` on register based on control bits */
+    Or(a=resetOrLoad, b=inc, out=resetOrLoadOrInc);
+
+    /* set `load` and `in` on register */
+    ARegister(
+      in=muxResetLoadIncNone,
+      load=resetOrLoadOrInc,
+      out=regOut
+    );
+
+    And16(a=regOut, b=true, out=out);
 }

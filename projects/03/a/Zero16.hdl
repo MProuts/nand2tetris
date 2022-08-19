@@ -1,0 +1,39 @@
+CHIP Zero16 {
+    IN in[16];
+    OUT out[16];
+
+    PARTS:
+    Not(in=in[0], out=not0);
+    Not(in=in[1], out=not1);
+    Not(in=in[2], out=not2);
+    Not(in=in[3], out=not3);
+    Not(in=in[4], out=not4);
+    Not(in=in[5], out=not5);
+    Not(in=in[6], out=not6);
+    Not(in=in[7], out=not7);
+    Not(in=in[8], out=not8);
+    Not(in=in[9], out=not9);
+    Not(in=in[10], out=not10);
+    Not(in=in[11], out=not11);
+    Not(in=in[12], out=not12);
+    Not(in=in[13], out=not13);
+    Not(in=in[14], out=not14);
+    Not(in=in[15], out=not15);
+
+    And(a=in[0], b=not0, out=out[0]);
+    And(a=in[1], b=not1, out=out[1]);
+    And(a=in[2], b=not2, out=out[2]);
+    And(a=in[3], b=not3, out=out[3]);
+    And(a=in[4], b=not4, out=out[4]);
+    And(a=in[5], b=not5, out=out[5]);
+    And(a=in[6], b=not6, out=out[6]);
+    And(a=in[7], b=not7, out=out[7]);
+    And(a=in[8], b=not8, out=out[8]);
+    And(a=in[9], b=not9, out=out[9]);
+    And(a=in[10], b=not10, out=out[10]);
+    And(a=in[11], b=not11, out=out[11]);
+    And(a=in[12], b=not12, out=out[12]);
+    And(a=in[13], b=not13, out=out[13]);
+    And(a=in[14], b=not14, out=out[14]);
+    And(a=in[15], b=not15, out=out[15]);
+}

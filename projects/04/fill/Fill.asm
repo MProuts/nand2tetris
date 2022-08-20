@@ -11,14 +11,14 @@
 // "white" in every pixel;
 // the screen should remain fully clear as long as no key is pressed.
 
-// If KBD == 0, GOTO WHITE
+// if KBD == 0, GOTO WHITE
 (START)
   @KBD
   D=M
   @WHITE
   D;JEQ
 
-  // ELSE set the substitution value to -1
+  // else set the substitution value to -1
   @sub
   M=-1
   @REFRESH

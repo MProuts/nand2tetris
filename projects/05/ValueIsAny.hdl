@@ -1,0 +1,21 @@
+CHIP ValueIsAny {
+  IN value[16], isNeg, isZero, isPos;
+  OUT out;
+
+  PARTS:
+  // Determine if value is negative
+  And(a=value[15], b=true, out=neg);
+  // Determine if value is zero
+  Nor16Digits(in=value, out=zero);
+  // Determine if value is positive
+  Not(in=neg, out=notNeg);
+  Not(in=zero, out=notZero);
+  And(a=notNeg, b=notZero, out=pos);
+
+  // Determine if value meets any of the control conditions
+  And(a=neg, b=isNeg, out=negJump);
+  And(a=zero, b=isZero, out=zeroJump);
+  And(a=pos, b=isPos, out=posJump);
+  Or(a=negJump, b=zeroJump, out=negOrZeroJump);
+  Or(a=negOrZeroJump, b=posJump, out=out);
+}

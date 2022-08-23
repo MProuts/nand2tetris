@@ -1,0 +1,22 @@
+CHIP Nor16Digits {
+  IN in[16];
+  OUT out[1];
+
+  PARTS:
+  Or(a=in[0],  b=in[1], out=out0or1);
+  Or(a=in[2],  b=in[3], out=out2or3);
+  Or(a=in[4],  b=in[5], out=out4or5);
+  Or(a=in[6],  b=in[7], out=out6or7);
+  Or(a=in[8],  b=in[9], out=out8or9);
+  Or(a=in[10], b=in[11], out=out10or11);
+  Or(a=in[12], b=in[13], out=out12or13);
+  Or(a=in[14], b=in[15], out=out14or15);
+  Or(a=out0or1, b=out2or3, out=out0or3);
+  Or(a=out4or5, b=out6or7, out=out4or7);
+  Or(a=out8or9, b=out10or11, out=out8or11);
+  Or(a=out12or13, b=out14or15, out=out12or15);
+  Or(a=out0or3, b=out4or7, out=out0or7);
+  Or(a=out8or11, b=out12or15, out=out8or15);
+  Or(a=out0or7, b=out8or15, out=anyDigits);
+  Not(in=anyDigits, out=out);
+}

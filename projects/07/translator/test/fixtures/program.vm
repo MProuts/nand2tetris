@@ -1,0 +1,9 @@
+  @FOO
+  M=A
+  @END
+  0;JMP
+  @R1
+  D=A
+(END)
+  @END
+  0;JMP

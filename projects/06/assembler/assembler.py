@@ -13,12 +13,11 @@ class Assembler:
         source_name, ext = os.path.splitext(source_basename)
         if not ext == '.asm':
             raise ValueError('Input must be .asm file')
-
         target_path = (f'{source_dir}/{source_name}.hack')
 
         symbol_table = SymbolTable()
 
-        # first pass
+        # First pass
         with open(source_path, 'r') as source_file:
             line_number = 0
             for assembly in source_file:
@@ -30,7 +29,7 @@ class Assembler:
                     continue
                 line_number += 1
 
-        # second pass
+        # Second pass
         with open(source_path, 'r') as source_file:
             with open(target_path, 'w') as target_file:
                 for assembly in source_file:

@@ -5,4 +5,4 @@ cd assembler/
 python3 -m pytest
 ```
 
-Note that using `python -m` adds the current directory to sys.path.
+Note that using `python -m` adds the current directory to `sys.path`.

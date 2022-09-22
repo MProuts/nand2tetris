@@ -43,6 +43,7 @@ class SymbolTable:
             self.n += 1
             return n_temp
 
-    def _defined_symbols(self):
+    # Helper method for debugging
+    def __defined_symbols(self):
         defined_keys = set(self._table) - set(self.PREDEFINED_SYMBOLS)
         return { k : self._table[k] for k in defined_keys }

@@ -1,4 +1,5 @@
 class Transpiler:
+    # TODO: Rewrite with bitwise operations or something?
     comp_to_bin = {
         '0':   '0101010', '1':   '0111111', '-1':  '0111010',
         'D':   '0001100', 'A':   '0110000', 'M':   '1110000',

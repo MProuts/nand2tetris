@@ -3,6 +3,7 @@ import pytest
 from translator import Translator
 
 class TestTranslatorPush:
+    translator = Translator()
     # .translate()
     # ===========
     def test_push_constant(self):
@@ -20,7 +21,7 @@ class TestTranslatorPush:
             "@SP\n"
             "M=M+1\n"
         )
-        assembly = Translator.translate(tokens)
+        assembly = self.translator.translate(tokens)
         assert assembly == expected
 
     def test_push_segment_pointer(self):
@@ -44,7 +45,7 @@ class TestTranslatorPush:
             "@SP\n"
             "M=M+1\n"
         )
-        assembly = Translator.translate(tokens)
+        assembly = self.translator.translate(tokens)
         assert assembly == expected
 
     def test_push_temp(self):
@@ -65,7 +66,7 @@ class TestTranslatorPush:
             "@SP\n"
             "M=M+1\n"
         )
-        assembly = Translator.translate(tokens)
+        assembly = self.translator.translate(tokens)
         assert assembly == expected
 
     def test_push_pointer(self):
@@ -86,7 +87,7 @@ class TestTranslatorPush:
             "@SP\n"
             "M=M+1\n"
         )
-        assembly = Translator.translate(tokens)
+        assembly = self.translator.translate(tokens)
         assert assembly == expected
 
     def test_push_static(self):
@@ -107,5 +108,5 @@ class TestTranslatorPush:
             "@SP\n"
             "M=M+1\n"
         )
-        assembly = Translator.translate(tokens, source_name='foo')
+        assembly = self.translator.translate(tokens, source_name='foo')
         assert assembly == expected

@@ -35,6 +35,8 @@ pop local 2
 push constant 6
 pop local 3
 push constant 123
+
+// time ~= 221
 call Sys.add12 1
 pop temp 0
 push local 0
@@ -52,6 +54,7 @@ return
 //
 // Returns n+12.
 
+// time ~= 221
 function Sys.add12 0
 push constant 4002
 pop pointer 0

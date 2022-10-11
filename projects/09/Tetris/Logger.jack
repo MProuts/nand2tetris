@@ -1,0 +1,41 @@
+class Logger {
+    function void reset() {
+        var int i;
+        do Output.moveCursor(22,63);
+
+        while (i < 63) {
+            do Output.backSpace();
+            let i = i + 1;
+        }
+
+        return;
+    }
+
+    function void log_string(String message) {
+        do Output.printString(message);
+        return;
+    }
+
+    function void log_int(int i) {
+        do Output.printInt(i);
+        return;
+    }
+
+    function void log_coordinates(Array coordinates) {
+        var int i, coord;
+        var String comma;
+
+        do Logger.reset();
+        let i = 0;
+        let comma = ",";
+        while (i < 8) {
+            let coord = coordinates[i];
+            do Output.printInt(coord);
+            do Output.printString(comma);
+            let i = i + 1;
+        }
+
+        do comma.dispose();
+        return;
+    }
+}

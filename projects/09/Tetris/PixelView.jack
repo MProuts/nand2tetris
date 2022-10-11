@@ -1,0 +1,56 @@
+class PixelView {
+        // var int row;
+        // var int col;
+        // var int cell_width;
+        // var int padding_left;
+        // var int padding_top;
+        // var int x_temp;
+        // var int y_temp;
+        // TODO: move to view class
+        // let cell_width = 12;
+
+        // let padding_left = 195; // 512 - 122 / 2
+        // let padding_top = 14; // 256 - 242
+
+        // // Draw border
+        // do Screen.setColor(true);
+        // let x_temp = padding_left + (cell_width * 10) + 1;
+        // let y_temp = padding_top + (cell_width * 20) + 1;
+        // do Screen.drawRectangle(padding_left, padding_top, x_temp, y_temp);
+        // do Screen.setColor(false);
+        // let x_temp = x_temp - 2;
+        // let y_temp = y_temp - 2;
+        // do Screen.drawRectangle((padding_left + 2), (padding_top + 2), x_temp, y_temp);
+
+        // // Draw grid
+        // do Screen.setColor(true);
+        // let row = 0;
+        // let col = 0;
+        // while (row < 21) {
+        //     while (col < 11) {
+        //         let x_temp = padding_left + (col * cell_width);
+        //         let y_temp = padding_top + (row * cell_width);
+        //         do Screen.drawRectangle(x_temp, y_temp, x_temp + 1, y_temp + 1);
+        //         let col = col + 1;
+        //     }
+        //     let row = row + 1;
+        //     let col = 0;
+        // }
+
+        // // Draw piece square
+        // do Screen.setColor(true);
+        // do Screen.drawRectangle(padding_left + 2, padding_top + 2, padding_left + 12, padding_top + 12);
+        // do Screen.drawRectangle(padding_left + 2, padding_top + 14, padding_left + 12, padding_top + 24);
+        // // Draw a tetris block in (1, 0)
+        // do Screen.drawRectangle(
+        //     padding_left + ((1 * 12) + 2),
+        //     padding_top + ((0 * 12) + 2),
+        //     padding_left + ((1 * 12) + 12),
+        //     padding_top + ((0 * 12) + 12)
+        // );
+        // do Screen.drawRectangle(padding_left + 14, padding_top + 14, padding_left + 24, padding_top + 24);
+
+        // // Draw score
+        // do Output.moveCursor(0, 31);
+        // do Output.printString("Score: 20");
+}

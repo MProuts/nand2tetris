@@ -1,0 +1,577 @@
+function Piece.MOVE_TYPE_ROTATE_R 0
+push constant 90
+return
+function Piece.MOVE_TYPE_ROTATE_L 0
+push constant 131
+return
+function Piece.MOVE_TYPE_DOWN 0
+push constant 133
+return
+function Piece.MOVE_TYPE_LEFT 0
+push constant 130
+return
+function Piece.MOVE_TYPE_RIGHT 0
+push constant 132
+return
+function Piece.PIECE_TYPE_I 0
+push constant 0
+return
+function Piece.PIECE_TYPE_J 0
+push constant 1
+return
+function Piece.PIECE_TYPE_L 0
+push constant 2
+return
+function Piece.PIECE_TYPE_O 0
+push constant 3
+return
+function Piece.PIECE_TYPE_S 0
+push constant 4
+return
+function Piece.PIECE_TYPE_T 0
+push constant 5
+return
+function Piece.PIECE_TYPE_Z 0
+push constant 6
+return
+function Piece.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 3
+push pointer 0
+call Piece.initial_row_offset 1
+pop this 1
+push pointer 0
+call Piece.initial_column_offset 1
+pop this 2
+push constant 0
+pop this 0
+push pointer 0
+return
+function Piece.initial_row_offset 1
+push argument 0
+pop pointer 0
+push this 3
+call Piece.PIECE_TYPE_I 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+call PieceI.initial_row_offset 0
+pop local 0
+label IF_FALSE0
+push this 3
+call Piece.PIECE_TYPE_J 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+call PieceJ.initial_row_offset 0
+pop local 0
+label IF_FALSE1
+push this 3
+call Piece.PIECE_TYPE_L 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+call PieceL.initial_row_offset 0
+pop local 0
+label IF_FALSE2
+push this 3
+call Piece.PIECE_TYPE_O 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+call PieceO.initial_row_offset 0
+pop local 0
+label IF_FALSE3
+push this 3
+call Piece.PIECE_TYPE_S 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+call PieceS.initial_row_offset 0
+pop local 0
+label IF_FALSE4
+push this 3
+call Piece.PIECE_TYPE_T 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+call PieceT.initial_row_offset 0
+pop local 0
+label IF_FALSE5
+push this 3
+call Piece.PIECE_TYPE_Z 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+call PieceZ.initial_row_offset 0
+pop local 0
+label IF_FALSE6
+push local 0
+return
+function Piece.initial_column_offset 1
+push argument 0
+pop pointer 0
+push this 3
+call Piece.PIECE_TYPE_I 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+call PieceI.initial_column_offset 0
+pop local 0
+label IF_FALSE0
+push this 3
+call Piece.PIECE_TYPE_J 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+call PieceJ.initial_column_offset 0
+pop local 0
+label IF_FALSE1
+push this 3
+call Piece.PIECE_TYPE_L 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+call PieceL.initial_column_offset 0
+pop local 0
+label IF_FALSE2
+push this 3
+call Piece.PIECE_TYPE_O 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+call PieceO.initial_column_offset 0
+pop local 0
+label IF_FALSE3
+push this 3
+call Piece.PIECE_TYPE_S 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+call PieceS.initial_column_offset 0
+pop local 0
+label IF_FALSE4
+push this 3
+call Piece.PIECE_TYPE_T 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+call PieceT.initial_column_offset 0
+pop local 0
+label IF_FALSE5
+push this 3
+call Piece.PIECE_TYPE_Z 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+call PieceZ.initial_column_offset 0
+pop local 0
+label IF_FALSE6
+push local 0
+return
+function Piece.sprite 1
+push argument 0
+pop pointer 0
+push this 3
+call Piece.PIECE_TYPE_I 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+call PieceI.sprite 1
+pop local 0
+label IF_FALSE0
+push this 3
+call Piece.PIECE_TYPE_J 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push argument 1
+call PieceJ.sprite 1
+pop local 0
+label IF_FALSE1
+push this 3
+call Piece.PIECE_TYPE_L 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push argument 1
+call PieceL.sprite 1
+pop local 0
+label IF_FALSE2
+push this 3
+call Piece.PIECE_TYPE_O 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push argument 1
+call PieceO.sprite 1
+pop local 0
+label IF_FALSE3
+push this 3
+call Piece.PIECE_TYPE_S 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push argument 1
+call PieceS.sprite 1
+pop local 0
+label IF_FALSE4
+push this 3
+call Piece.PIECE_TYPE_T 0
+eq
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push argument 1
+call PieceT.sprite 1
+pop local 0
+label IF_FALSE5
+push this 3
+call Piece.PIECE_TYPE_Z 0
+eq
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
+push argument 1
+call PieceZ.sprite 1
+pop local 0
+label IF_FALSE6
+push local 0
+return
+function Piece.dup 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+call Piece.get_type 1
+pop this 3
+push argument 0
+call Piece.get_row_offset 1
+pop this 1
+push argument 0
+call Piece.get_col_offset 1
+pop this 2
+push argument 0
+call Piece.get_orientation 1
+pop this 0
+push pointer 0
+return
+function Piece.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Piece.get_type 0
+push argument 0
+pop pointer 0
+push this 3
+return
+function Piece.get_row_offset 0
+push argument 0
+pop pointer 0
+push this 1
+return
+function Piece.get_col_offset 0
+push argument 0
+pop pointer 0
+push this 2
+return
+function Piece.get_orientation 0
+push argument 0
+pop pointer 0
+push this 0
+return
+function Piece.set_row_offset 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 1
+push constant 0
+return
+function Piece.set_col_offset 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 2
+push constant 0
+return
+function Piece.set_orientation 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 0
+push constant 0
+return
+function Piece.out_of_range 5
+push argument 0
+pop pointer 0
+push pointer 0
+call Piece.coordinates 1
+pop local 4
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push local 0
+push local 4
+add
+pop pointer 1
+push that 0
+pop local 1
+push local 0
+push constant 1
+add
+push local 4
+add
+pop pointer 1
+push that 0
+pop local 2
+push local 1
+push constant 0
+lt
+push local 1
+push constant 19
+gt
+or
+push local 2
+push constant 0
+lt
+or
+push local 2
+push constant 9
+gt
+or
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 4
+call Array.dispose 1
+pop temp 0
+push constant 0
+not
+return
+label IF_FALSE0
+push local 0
+push constant 2
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 4
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Piece.coordinates 3
+push argument 0
+pop pointer 0
+push constant 8
+call Array.new 1
+pop local 1
+push pointer 0
+push this 0
+call Piece.sprite 2
+pop local 2
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push local 0
+push local 1
+add
+push local 0
+push local 2
+add
+pop pointer 1
+push that 0
+push this 1
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+push local 0
+push local 1
+add
+push local 0
+push local 2
+add
+pop pointer 1
+push that 0
+push this 2
+add
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Piece.translate 1
+push argument 0
+pop pointer 0
+push pointer 0
+call Piece.dup 1
+pop local 0
+push argument 1
+call Piece.MOVE_TYPE_ROTATE_R 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push local 0
+call Piece.rotate_right 1
+pop temp 0
+label IF_FALSE0
+push argument 1
+call Piece.MOVE_TYPE_ROTATE_L 0
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push local 0
+call Piece.rotate_left 1
+pop temp 0
+label IF_FALSE1
+push argument 1
+call Piece.MOVE_TYPE_DOWN 0
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push local 0
+call Piece.move_down 1
+pop temp 0
+label IF_FALSE2
+push argument 1
+call Piece.MOVE_TYPE_LEFT 0
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push local 0
+call Piece.move_left 1
+pop temp 0
+label IF_FALSE3
+push argument 1
+call Piece.MOVE_TYPE_RIGHT 0
+eq
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
+push local 0
+call Piece.move_right 1
+pop temp 0
+label IF_FALSE4
+push local 0
+return
+function Piece.rotate_right 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 3
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop this 0
+goto IF_END0
+label IF_FALSE0
+push this 0
+push constant 1
+add
+pop this 0
+label IF_END0
+push constant 0
+return
+function Piece.rotate_left 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 3
+pop this 0
+goto IF_END0
+label IF_FALSE0
+push this 0
+push constant 1
+sub
+pop this 0
+label IF_END0
+push constant 0
+return
+function Piece.move_down 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+add
+pop this 1
+push constant 0
+return
+function Piece.move_right 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 1
+add
+pop this 2
+push constant 0
+return
+function Piece.move_left 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 1
+sub
+pop this 2
+push constant 0
+return

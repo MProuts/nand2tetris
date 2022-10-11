@@ -1,0 +1,165 @@
+/* Implements 10 x 20 tetris board. Stores and manages state in a two-
+ * dimensional array.
+ */
+class Board {
+    field Array state;
+
+    constructor Board new() {
+        var int i;
+        let state = Array.new(20); // rows
+
+        let i = 0;
+        while (i < (20)) {
+            let state[i] = new_row(); // columns
+            let i = i + 1;
+        }
+
+        return this;
+    }
+
+    method Array new_row() {
+        var int i;
+        var Array row;
+
+        let row = Array.new(11);
+        while (i < 11) {
+            let row[i] = false;
+            let i = i + 1;
+        }
+        return row;
+    }
+
+    method void dispose() {
+        do state.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    // validation
+    // ==========
+    method boolean valid_point(int row, int column) {
+        var boolean occupied;
+        var boolean out_of_range;
+
+        let out_of_range = (row < 0 | row > 19 | column < 0 | column > 9);
+        if (out_of_range) {
+            return false;
+        }
+
+        return true;
+    }
+
+    method boolean valid_points(Array coordinates) {
+        var int i;
+        var boolean valid;
+
+        let i = 0;
+        while (i < 8) {
+            let valid = valid_point(coordinates[i], coordinates[i + 1]);
+            if (~valid) {
+                return false;
+            }
+            let i = i + 2;
+        }
+        return valid;
+    }
+
+    method boolean occupied(Array coordinates) {
+        var int i;
+        var boolean occupied;
+
+        let i = 0;
+        while (i < 8) {
+            let occupied = get_point(coordinates[i], coordinates[i + 1]);
+            if (occupied) {
+                return true;
+            }
+            let i = i + 2;
+        }
+        return false;
+    }
+
+    // getters
+    // =======
+    method boolean get_point(int row, int column) {
+        let row = state[row];
+        return row[column];
+    }
+
+    // setters
+    // =======
+    method boolean set_point(int row, int column, boolean value) {
+        var boolean valid;
+        let valid = valid_point(row, column);
+        if (~valid) {
+            return false;
+        }
+        let row = state[row];
+        let row[column] = value;
+        return true;
+    }
+
+    method boolean set_points(Array coordinates, boolean value) {
+        var int i;
+
+        let i = 0;
+        while (i < 8) {
+            do set_point(coordinates[i], coordinates[i + 1], value);
+            let i = i + 2;
+        }
+        return true;
+    }
+
+    // actions
+    // =======
+    method void clear_complete_rows() {
+        var int i;
+        var Array row;
+
+        let i = 0;
+        while (i < 20) {
+            if (row_is_complete(i)) {
+                do clear_row(i);
+            } else {
+                // only decrement if we didn't clear a row
+                let i = i + 1;
+            }
+        }
+
+        return;
+    }
+
+    method boolean row_is_complete(int i) {
+        var int j;
+        var boolean complete;
+        var Array row;
+
+        let row = state[i];
+        let complete = true;
+        let j = 0;
+        while (j < 10) {
+            let complete = (complete & row[j]);
+            let j = j + 1;
+        }
+        return complete;
+    }
+
+    method void clear_row(int i) {
+        var Array row;
+
+        // delete the row
+        let row = state[i];
+        do row.dispose();
+
+        // move rows above down
+        while (i > 0) {
+            let state[i] = state[i - 1];
+            let i = i - 1;
+        }
+
+        // add a new row at the top
+        let state[i] = new_row();
+        return;
+    }
+
+}

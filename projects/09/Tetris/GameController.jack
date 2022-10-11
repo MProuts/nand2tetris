@@ -1,0 +1,212 @@
+class GameController {
+    field Board board;
+    field Piece current_piece;
+    field int current_piece_type;
+    field int score;
+
+    constructor GameController new() {
+        let board = Board.new();
+        let current_piece_type = 0;
+        do spawn_piece();
+        let score = 0;
+        do render();
+
+        return this;
+    }
+
+    method void spawn_piece() {
+        var Piece piece;
+        var int piece_type;
+        var Array arr;
+
+        let piece = Piece.new(current_piece_type);
+
+        if (obstructed(piece, board)) {
+            do TextView.render_game_over();
+            do Sys.wait(1000);
+            do Sys.halt();
+        } else {
+            let current_piece = piece;
+            let score = score + 1;
+            do increment_piece_type();
+        }
+        return;
+    }
+
+    method void increment_piece_type() {
+        if (current_piece_type = 6) {
+            let current_piece_type = 0;
+        } else {
+            let current_piece_type = current_piece_type + 1;
+        }
+        // do Logger.reset();
+        // do Logger.log_int(current_piece_type);
+        return;
+    }
+
+    method void dispose() {
+        do board.dispose();
+        do current_piece.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void run() {
+        var boolean exit;
+        var int poll_rate;
+        var int drop_rate;
+        var int iters_per_drop;
+        var int i;
+        var char key;
+
+        let exit = false;
+        // rate in milliseconds to poll the keyboard
+        let poll_rate = 50;
+        // rate pieces drop in milliseconds
+        let drop_rate = 1000;
+        // number of polling iterations before a piece should drop
+        let iters_per_drop = drop_rate / poll_rate;
+
+        let i = 0;
+        while (~exit) {
+            // wait for keypress
+            // =================
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do Sys.wait(poll_rate);
+                let i = i + 1;
+
+                // drop automatically after each period
+                if (i > iters_per_drop) {
+                    do handle_drop();
+                    let i = 0;
+                }
+            }
+
+            // on keypress
+            // ===========
+            do move_piece(key);
+
+            // for repeatable actions
+            if ((key = Piece.MOVE_TYPE_DOWN()) |
+                (key = Piece.MOVE_TYPE_LEFT()) |
+                (key = Piece.MOVE_TYPE_RIGHT())) {
+                // while the key is held down
+                while (~(key = 0)) {
+                    let key = Keyboard.keyPressed();
+                    do Sys.wait(poll_rate);
+                    let i = i + 1;
+
+                    // repeat the action at the poll rate
+                    do move_piece(key);
+
+                    // drop automatically after each period
+                    if (i > iters_per_drop) {
+                        do handle_drop();
+                        let i = 0;
+                    }
+                }
+
+            // for non-repeatable actions
+            } else {
+                // while the key is held down
+                while (~(key = 0)) {
+                    let key = Keyboard.keyPressed();
+                    do Sys.wait(poll_rate);
+                    let i = i + 1;
+
+                    // drop automatically after each period
+                    if (i > iters_per_drop) {
+                        do handle_drop();
+                        let i = 0;
+                    }
+                }
+            }
+            // on key release
+            // ==============
+            // ^ next iteration through while(~exit) loop
+        }
+        return;
+    }
+
+    method void handle_drop() {
+        var char down;
+        do clear_rows();
+        let down = Piece.MOVE_TYPE_DOWN();
+        do move_piece(down);
+        do render();
+        return;
+    }
+
+    method void clear_rows() {
+        do board.clear_complete_rows();
+        return;
+    }
+
+    method void move_piece(char key) {
+        var char down;
+        var Piece next_piece;
+        var Array current_coordinates;
+
+        let down = Piece.MOVE_TYPE_DOWN();
+        let next_piece = current_piece.translate(key);
+
+        if (obstructed(next_piece, board)) {
+            if (key = down) {
+                // lock cooridnates onto board
+                let current_coordinates = current_piece.coordinates();
+                do board.set_points(current_coordinates, true);
+                do current_piece.dispose();
+                do spawn_piece();
+
+                do current_coordinates.dispose();
+                do render();
+            }
+
+            do next_piece.dispose();
+            return;
+        } else {
+            // update current_piece
+            do current_piece.dispose();
+            let current_piece = next_piece;
+            // don't dispose - next_piece points to current_piece
+            let next_piece = null;
+
+            do render();
+            return;
+        }
+    }
+
+    // Had to break this out into a separate method because jack doesn't
+    // short-circuit logical or expressions and board#occupied() isn't safe to
+    // call with out-of-range coordinates. (╯°□°)╯︵ ┻━┻
+    method boolean obstructed(Piece piece, Board board) {
+        var Array coordinates;
+        let coordinates = piece.coordinates();
+
+        if (piece.out_of_range()) {
+            do coordinates.dispose();
+            return true;
+        }
+
+        if (board.occupied(coordinates)) {
+            do coordinates.dispose();
+            return true;
+        }
+
+        do coordinates.dispose();
+        return false;
+    }
+
+    method void render() {
+        // var String label;
+        // let label = "SP: ";
+        // do Logger.reset();
+        // do Logger.log_string(label);
+        // do Logger.log_int(Memory.peek(0));
+        // do label.dispose();
+
+        do TextView.render_game(board, current_piece, score);
+        return;
+    }
+}

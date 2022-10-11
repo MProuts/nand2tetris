@@ -1,0 +1,259 @@
+class Piece {
+    // instance variables
+    // ==================
+    field int orientation, row_offset, col_offset;
+    field char type;
+
+    // constants
+    // =========
+    // Using class methods here to bolt on the ideas of class constants since
+    // there's no class-level assignment outside of subroutines
+    // (╯°□°)╯︵ ┻━┻ (╯°□°)╯︵ ┻━┻
+    function char MOVE_TYPE_ROTATE_R() { return 90; }
+    function char MOVE_TYPE_ROTATE_L() { return 131; }
+    function char MOVE_TYPE_DOWN()     { return 133; }
+    function char MOVE_TYPE_LEFT()     { return 130; }
+    function char MOVE_TYPE_RIGHT()    { return 132; }
+
+    function char PIECE_TYPE_I() { return 0; } // 73; } // 'I'
+    function char PIECE_TYPE_J() { return 1; } // 74; } // 'J'
+    function char PIECE_TYPE_L() { return 2; } // 76; } // 'L'
+    function char PIECE_TYPE_O() { return 3; } // 79; } // 'O'
+    function char PIECE_TYPE_S() { return 4; } // 83; } // 'S'
+    function char PIECE_TYPE_T() { return 5; } // 84; } // 'T'
+    function char PIECE_TYPE_Z() { return 6; } // 90; } // 'Z'
+
+    // construction/destruction
+    // ========================
+    constructor Piece new(char a_type) {
+        let type = a_type; // instead of factory (╯°□°)╯︵ ┻━┻
+        let row_offset = initial_row_offset();
+        let col_offset = initial_column_offset();
+        let orientation = 0;
+        return this;
+    }
+
+    // "subclass" methods
+    // ==================
+    // There's no idea of subclassing and we also can't inject a class/module
+    // because there's no idea of interfaces/polymorphic typing. So we have
+    // to implement piece types using delegation keyed off of a stored type
+    // "constant" -- see above. (╯°□°)╯︵ ┻━┻
+    method int initial_row_offset() {
+        var int row_offset;
+        if (type = Piece.PIECE_TYPE_I()) {
+            let row_offset = PieceI.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_J()) {
+            let row_offset = PieceJ.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_L()) {
+            let row_offset = PieceL.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_O()) {
+            let row_offset = PieceO.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_S()) {
+            let row_offset = PieceS.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_T()) {
+            let row_offset = PieceT.initial_row_offset();
+        }
+        if (type = Piece.PIECE_TYPE_Z()) {
+            let row_offset = PieceZ.initial_row_offset();
+        }
+        return row_offset;
+    }
+
+    method int initial_column_offset() {
+        var int column_offset;
+        if (type = Piece.PIECE_TYPE_I()) {
+            let column_offset = PieceI.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_J()) {
+            let column_offset = PieceJ.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_L()) {
+            let column_offset = PieceL.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_O()) {
+            let column_offset = PieceO.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_S()) {
+            let column_offset = PieceS.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_T()) {
+            let column_offset = PieceT.initial_column_offset();
+        }
+        if (type = Piece.PIECE_TYPE_Z()) {
+            let column_offset = PieceZ.initial_column_offset();
+        }
+        return column_offset;
+    }
+
+    method Array sprite(int orientation) {
+        var Array spt;
+        if (type = Piece.PIECE_TYPE_I()) {
+            let spt = PieceI.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_J()) {
+            let spt = PieceJ.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_L()) {
+            let spt = PieceL.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_O()) {
+            let spt = PieceO.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_S()) {
+            let spt = PieceS.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_T()) {
+            let spt = PieceT.sprite(orientation);
+        }
+        if (type = Piece.PIECE_TYPE_Z()) {
+            let spt = PieceZ.sprite(orientation);
+        }
+        return spt;
+    }
+
+    constructor Piece dup(Piece other) {
+        let type = other.get_type();
+        let row_offset = other.get_row_offset();
+        let col_offset = other.get_col_offset();
+        let orientation = other.get_orientation();
+        return this;
+    }
+
+    method void dispose() {
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    // getters
+    // =======
+    method int get_type() {
+        return type;
+    }
+
+    method int get_row_offset() {
+        return row_offset;
+    }
+
+    method int get_col_offset() {
+        return col_offset;
+    }
+
+    method int get_orientation() {
+        return orientation;
+    }
+
+    // setters
+    // =======
+    method void set_row_offset(int new_row_offset) {
+        let row_offset = new_row_offset;
+        return;
+    }
+
+    method void set_col_offset(int new_col_offset) {
+        let col_offset = new_col_offset;
+        return;
+    }
+
+    method void set_orientation(int new_orientation) {
+        let orientation = new_orientation;
+        return;
+    }
+
+    // validation
+    // ==========
+    method boolean out_of_range() {
+        var int i, row, col;
+        var boolean out_of_range;
+        var Array coordinates;
+
+        let coordinates = coordinates();
+        let i = 0;
+        while (i < 8) {
+            let row = coordinates[i];
+            let col = coordinates[i + 1];
+            if ((row < 0) | (row > 19) | (col < 0) | (col > 9)) {
+                do coordinates.dispose();
+                return true;
+            }
+            let i = i + 2;
+        }
+
+        do coordinates.dispose();
+        return false;
+    }
+
+    // coordinate calculation
+    // ======================
+    method Array coordinates() {
+        var int i;
+        var Array arr;
+        var Array spt;
+
+        let arr = Array.new(8);
+        let spt = sprite(orientation);
+
+        let i = 0;
+        while (i < 8) {
+            let arr[i] = spt[i] + row_offset;
+            let i = i + 1;
+            let arr[i] = spt[i] + col_offset;
+            let i = i + 1;
+        }
+
+        return arr;
+    }
+
+    // translation
+    // ===========
+    method Piece translate(char type) {
+        var Piece new_piece;
+
+        let new_piece = Piece.dup(this);
+        if (type = Piece.MOVE_TYPE_ROTATE_R()) { do new_piece.rotate_right(); }
+        if (type = Piece.MOVE_TYPE_ROTATE_L()) { do new_piece.rotate_left(); }
+        if (type = Piece.MOVE_TYPE_DOWN())     { do new_piece.move_down(); }
+        if (type = Piece.MOVE_TYPE_LEFT())     { do new_piece.move_left(); }
+        if (type = Piece.MOVE_TYPE_RIGHT())    { do new_piece.move_right(); }
+
+        return new_piece;
+    }
+
+    method void rotate_right() {
+        if (orientation = 3) {
+            let orientation = 0;
+        } else {
+            let orientation = orientation + 1;
+        }
+        return;
+    }
+
+    method void rotate_left() {
+        if (orientation = 0) {
+            let orientation = 3;
+        } else {
+            let orientation = orientation - 1;
+        }
+        return;
+    }
+
+    method void move_down() {
+        let row_offset = row_offset + 1;
+        return;
+    }
+
+    method void move_right() {
+        let col_offset = col_offset + 1;
+        return;
+    }
+
+    method void move_left() {
+        let col_offset = col_offset - 1;
+        return;
+    }
+}

@@ -1,0 +1,44 @@
+class PieceJ {
+    // Orientations
+    // ============
+    //   i | zero  | one   | two   | three |
+    // --- | ----- | ----- | ----- | ----- |
+    // j-> | 0 1 2 | 0 1 2 | 0 1 2 | 0 1 2 |
+    //   0 | #     |   # # |       |   #   |
+    //   1 | # # # |   #   | # # # |   #   |
+    //   2 |       |   #   |     # | # #   |
+    function int initial_row_offset()    { return 0; }
+    function int initial_column_offset() { return 3; }
+    function Array sprite(int orientation) {
+        var Array arr;
+
+        let arr = Array.new(8);
+
+        if (orientation = 0) {
+            let arr[0] = 0; let arr[1] = 0;   
+            let arr[2] = 1; let arr[3] = 0;
+            let arr[4] = 1; let arr[5] = 1;
+            let arr[6] = 1; let arr[7] = 2;
+        }
+        if (orientation = 1) {
+            let arr[0] = 0; let arr[1] = 2;   
+            let arr[2] = 0; let arr[3] = 1;
+            let arr[4] = 1; let arr[5] = 1;
+            let arr[6] = 2; let arr[7] = 1;
+        }
+        if (orientation = 2) {
+            let arr[0] = 2; let arr[1] = 2;   
+            let arr[2] = 1; let arr[3] = 0;
+            let arr[4] = 1; let arr[5] = 1;
+            let arr[6] = 1; let arr[7] = 2;
+        }
+        if (orientation = 3) {
+            let arr[0] = 2; let arr[1] = 0;   
+            let arr[2] = 0; let arr[3] = 1;
+            let arr[4] = 1; let arr[5] = 1;
+            let arr[6] = 2; let arr[7] = 1;
+        }
+
+        return arr;
+    }
+}

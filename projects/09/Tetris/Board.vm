@@ -1,0 +1,385 @@
+function Board.new 1
+push constant 1
+call Memory.alloc 1
+pop pointer 0
+push constant 20
+call Array.new 1
+pop this 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 20
+lt
+not
+if-goto WHILE_END0
+push local 0
+push this 0
+add
+push pointer 0
+call Board.new_row 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push pointer 0
+return
+function Board.new_row 2
+push argument 0
+pop pointer 0
+push constant 11
+call Array.new 1
+pop local 1
+label WHILE_EXP0
+push local 0
+push constant 11
+lt
+not
+if-goto WHILE_END0
+push local 0
+push local 1
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Board.dispose 0
+push argument 0
+pop pointer 0
+push this 0
+call Array.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Board.valid_point 2
+push argument 0
+pop pointer 0
+push argument 1
+push constant 0
+lt
+push argument 1
+or
+push constant 19
+gt
+push argument 2
+or
+push constant 0
+lt
+push argument 2
+or
+push constant 9
+gt
+pop local 1
+push local 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push constant 0
+not
+return
+function Board.valid_points 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+push argument 1
+add
+pop pointer 1
+push that 0
+push local 0
+push constant 1
+add
+push argument 1
+add
+pop pointer 1
+push that 0
+call Board.valid_point 3
+pop local 1
+push local 1
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push local 0
+push constant 2
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Board.occupied 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+push argument 1
+add
+pop pointer 1
+push that 0
+push local 0
+push constant 1
+add
+push argument 1
+add
+pop pointer 1
+push that 0
+call Board.get_point 3
+pop local 1
+push local 1
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+return
+label IF_FALSE0
+push local 0
+push constant 2
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Board.get_point 0
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop argument 1
+push argument 2
+push argument 1
+add
+pop pointer 1
+push that 0
+return
+function Board.set_point 1
+push argument 0
+pop pointer 0
+push pointer 0
+push argument 1
+push argument 2
+call Board.valid_point 3
+pop local 0
+push local 0
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+return
+label IF_FALSE0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop argument 1
+push argument 2
+push argument 1
+add
+push argument 3
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+not
+return
+function Board.set_points 1
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 8
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+push argument 1
+add
+pop pointer 1
+push that 0
+push local 0
+push constant 1
+add
+push argument 1
+add
+pop pointer 1
+push that 0
+push argument 2
+call Board.set_point 4
+pop temp 0
+push local 0
+push constant 2
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+not
+return
+function Board.clear_complete_rows 2
+push argument 0
+pop pointer 0
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 20
+lt
+not
+if-goto WHILE_END0
+push pointer 0
+push local 0
+call Board.row_is_complete 2
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+push local 0
+call Board.clear_row 2
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push local 0
+push constant 1
+add
+pop local 0
+label IF_END0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return
+function Board.row_is_complete 3
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 2
+push constant 0
+not
+pop local 1
+push constant 0
+pop local 0
+label WHILE_EXP0
+push local 0
+push constant 10
+lt
+not
+if-goto WHILE_END0
+push local 1
+push local 0
+push local 2
+add
+pop pointer 1
+push that 0
+and
+pop local 1
+push local 0
+push constant 1
+add
+pop local 0
+goto WHILE_EXP0
+label WHILE_END0
+push local 1
+return
+function Board.clear_row 1
+push argument 0
+pop pointer 0
+push argument 1
+push this 0
+add
+pop pointer 1
+push that 0
+pop local 0
+push local 0
+call Array.dispose 1
+pop temp 0
+label WHILE_EXP0
+push argument 1
+push constant 0
+gt
+not
+if-goto WHILE_END0
+push argument 1
+push this 0
+add
+push argument 1
+push constant 1
+sub
+push this 0
+add
+pop pointer 1
+push that 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push argument 1
+push constant 1
+sub
+pop argument 1
+goto WHILE_EXP0
+label WHILE_END0
+push argument 1
+push this 0
+add
+push pointer 0
+call Board.new_row 1
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 0
+return

@@ -1,0 +1,88 @@
+class TextView {
+
+    function void render_game(Board board, Piece piece, int score) {
+        // Note that rendering the board first effectively clears the piece's
+        // last position
+        do TextView.render_board(board, score);
+        do TextView.render_piece(piece);
+        return;
+    }
+
+    function void render_board(Board board, int score) {
+        var int i, j;
+        var boolean value;
+        var String string;
+        var String label;
+
+        let i = 0;
+        let j = 0;
+        let label = "**Tetris**";
+
+        do Output.moveCursor(0, 0);
+        do Output.printString(label);
+        do Output.println();
+        do label.dispose();
+
+        while (i < 20) {
+            if (board.row_is_complete(i)) {
+                let string = "##########";
+                do Output.printString(string);
+                do string.dispose();
+            } else {
+                while (j < 10) {
+                    let value = board.get_point(i, j);
+                    if (value) { let string = "X"; }
+                    else { let string = "_"; }
+
+                    do Output.printString(string);
+                    do string.dispose();
+
+                    let j = j + 1;
+                }
+            }
+            do Output.println();
+
+            let i = i + 1;
+            let j = 0;
+        }
+
+        do Output.println();
+        let label = "Score: ";
+        do Output.printString(label);
+        do Output.printInt(score);
+        do Output.println();
+        do label.dispose();
+        return;
+    }
+
+    function void render_piece(Piece piece) {
+        var Array coordinates;
+        var int i;
+
+        let i = 0;
+        let coordinates = piece.coordinates();
+        while (i < 8) {
+            do Output.moveCursor(coordinates[i] + 1, coordinates[i + 1]);
+            do Output.printString("0");
+            let i = i + 2;
+        }
+        return;
+    }
+
+    function void render_game_over() {
+        do Output.moveCursor(8,0);
+        do Output.printString("**********");
+        do Output.println();
+        do Output.printString("*        *");
+        do Output.println();
+        do Output.printString("* game   *");
+        do Output.println();
+        do Output.printString("*   over *");
+        do Output.println();
+        do Output.printString("*        *");
+        do Output.println();
+        do Output.printString("**********");
+        do Output.println();
+        return;
+    }
+}

@@ -1,0 +1,13 @@
+/** Initializes a new Tetris game and starts running it. */
+class Main {
+    function void main() {
+        var GameController game;
+        let game = GameController.new();
+        do game.run();
+        do game.dispose();
+        while (true) {
+            do Sys.wait(5);
+        }
+        return;
+    }
+}

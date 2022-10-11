@@ -1,0 +1,11 @@
+'Jack' Programming language
+===========================
+
+(noun)
+    A weird little toy language built in Nand2Tetris.
+
+etymoloty:
+An elision of "Java" and the work "hack".
+
+usage:
+I can't believe Jack doesn't have subclasses. (╯°□°)╯︵ ┻━┻

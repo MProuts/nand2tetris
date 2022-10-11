@@ -1,0 +1,21 @@
+function Main.main 1
+call GameController.new 0
+pop local 0
+push local 0
+call GameController.run 1
+pop temp 0
+push local 0
+call GameController.dispose 1
+pop temp 0
+label WHILE_EXP0
+push constant 0
+not
+not
+if-goto WHILE_END0
+push constant 5
+call Sys.wait 1
+pop temp 0
+goto WHILE_EXP0
+label WHILE_END0
+push constant 0
+return

@@ -1,5 +1,7 @@
 import re
 
+from jack_token import JackToken
+
 class JackTokenizer:
     KEYWORDS = [
         'class',
@@ -18,13 +20,6 @@ class JackTokenizer:
         '&', '|', '~',
         '<', '>', '=',
     ]
-
-    SYMBOL_ENCODING = {
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        '&': '&amp;',
-    }
 
     PATTERN_WHITESPACE = re.compile(r'\s')
     PATTERN_DIGIT = re.compile(r'\d')
@@ -68,9 +63,9 @@ class JackTokenizer:
 
             # symbols
             # =======
+            # Note: entity encoding for symbols is handled by JackToken#to_xml()
             if self._is_symbol(current_char):
-                value = self._encode_symbol(current_char)
-                yield { "type": "symbol", "value": value }
+                yield JackToken("symbol", current_char)
                 current_char = self.io.read(1)
                 continue
 
@@ -86,7 +81,7 @@ class JackTokenizer:
                     msg = "Integer constants must be between 0 and 32767"
                     raise ValueError(msg)
 
-                yield { "type": "integer_constant", "value": current_string }
+                yield JackToken("integerConstant", current_string)
                 continue
 
             # string constants
@@ -101,7 +96,7 @@ class JackTokenizer:
 
                 # Ignore closing quote
                 current_char = self.io.read(1)
-                yield { "type": "string_constant", "value": current_string }
+                yield JackToken("stringConstant", current_string)
                 continue
 
             # keyword or identifier
@@ -118,9 +113,9 @@ class JackTokenizer:
                     current_char = self.io.read(1)
 
                 if current_string in self.KEYWORDS:
-                    yield { "type": "keyword", "value": current_string }
+                    yield JackToken("keyword", current_string)
                 else:
-                    yield { "type": "identifier", "value": current_string }
+                    yield JackToken("identifier", current_string)
                 continue
 
             # error
@@ -163,6 +158,18 @@ class JackTokenizer:
 
     # convenience methods
     # ===================
-    # ! This will load everything into memory -- for testing only
+    # ! These methods will load everything into memory -- for testing only
     def _tokens(self):
         return [token for token in self.token_gen()]
+
+    def _tokens_as_dicts(self):
+        mapped = map(lambda t: t.to_dict(), self._tokens())
+        return list(mapped)
+
+    def _tokens_as_xml(self):
+        xml = "<tokens>\n"
+        for token in self._tokens():
+            xml += (token.to_xml() + '\n')
+        xml += "</tokens>\n"
+
+        return xml
